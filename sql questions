@@ -1,4 +1,4 @@
-1) Monthly customer report 
+ud1) Monthly customer report 
 solution ->
 
 SELECT MONTH(created_at) as month, COUNT(DISTINCT user_id) as num_customers,
@@ -63,4 +63,16 @@ sum(case when n_jobs=n_posts then 1 else 0 end ) as single_post,
 sum(case when n_jobs!=n_posts then 1 else 0 end) as multiple_posts
 from job_post;
 
-6)
+6) overbudget projects
+
+with cte as (select p.title,
+    budget,
+     (SUM(salary) * DATEDIFF(end_date, start_date)/365) as sal     
+from employee_projects ep 
+join employees e on ep.employee_id = e.id 
+join projects p on ep.project_id = p.id
+group by 1)
+
+select title,
+    (case when budget >= sal then 'within budget' else 'overbudget' end) as project_forecast
+from cte 
