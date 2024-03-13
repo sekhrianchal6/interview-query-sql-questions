@@ -47,3 +47,20 @@ pe.title as project_title_end,
 p.title as project_title_start
 from projects pe join projects p
 on date(p.start_date) = date(pe.end_date)
+
+5)Repeat Job Postings
+
+with job_post as (
+    select user_id,
+    count(distinct job_id) as n_jobs,
+    count(distinct id) as n_posts
+    from job_postings
+    group by user_id
+)
+
+select 
+sum(case when n_jobs=n_posts then 1 else 0 end ) as single_post,
+sum(case when n_jobs!=n_posts then 1 else 0 end) as multiple_posts
+from job_post;
+
+6)
