@@ -76,3 +76,14 @@ group by 1)
 select title,
     (case when budget >= sal then 'within budget' else 'overbudget' end) as project_forecast
 from cte 
+
+7) Closest SAT Scores
+
+select s.student as one_student 	,
+sc.student as other_student	,
+abs(sc.score- s.score) as score_diff
+from scores s inner join scores sc 
+on s.student != sc.student
+AND s.id < sc.id
+ORDER BY 3 ASC, 1 ASC
+LIMIT 1
