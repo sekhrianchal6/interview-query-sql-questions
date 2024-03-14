@@ -87,3 +87,14 @@ on s.student != sc.student
 AND s.id < sc.id
 ORDER BY 3 ASC, 1 ASC
 LIMIT 1
+
+8) Average Commute Time
+
+SELECT commuter_id,
+floor(avg(timestampdiff(minute,start_dt,end_dt))) as avg_commuter_time,
+(select round(avg(timestampdiff(minute,start_dt,end_dt)),0) 
+from rides where city="NY") as avg_time
+
+FROM rides
+where city = 'NY'
+group by commuter_id;
