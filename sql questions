@@ -98,3 +98,19 @@ from rides where city="NY") as avg_time
 FROM rides
 where city = 'NY'
 group by commuter_id;
+
+9)Weighted Average Sales
+
+SELECT date , product_id ,
+(0.5*sales_volume + 0.3*prev_one+0.2*prev_two) as weighted_avg_sales
+FROM(
+
+SELECT date , product_id,sales_volume,prev_one,prev_two
+FROM (
+    SELECT date , product_id,sales_volume,
+    LAG(sales_volume,1) OVER(PARTITION BY product_id ORDER BY date) as prev_one,
+    LAG(sales_volume,2) OVER(PARTITION BY product_id ORDER BY date) as prev_two
+    FROM sales  
+) AS subquery
+WHERE prev_one IS NOT NULL AND prev_two IS NOT NULL
+) sub
