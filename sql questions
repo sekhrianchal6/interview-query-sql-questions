@@ -114,3 +114,11 @@ FROM (
 ) AS subquery
 WHERE prev_one IS NOT NULL AND prev_two IS NOT NULL
 ) sub
+
+10) Duplicate Rows
+
+select u.created_at,u.id,u.name
+from users u join users us
+on u.id = us.id
+group by u.id
+having count(*)>1
