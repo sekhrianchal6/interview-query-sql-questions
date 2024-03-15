@@ -130,3 +130,18 @@ ship_date, c.customer_id	,
 IF(ship_date BETWEEN membership_start_date AND membership_end_date, 'Y','N') as is_member,
 quantity from shipments s join customers c
 on s.customer_id = c.customer_id
+
+
+12) Notification Deliveries
+
+with cte as(  SELECT u.id, COUNT(n.notification) as total_pushes
+    FROM users u
+    LEFT JOIN notification_deliveries n
+        ON u.id = nd.user_id
+            AND u.conversion_date >= n.created_at
+    WHERE u.conversion_date IS NOT NULL
+    GROUP BY 1)
+
+ SELECT total_pushes, COUNT(total_pushes) as frequency
+    FROM cte
+    group by 1
