@@ -122,3 +122,11 @@ from users u join users us
 on u.id = us.id
 group by u.id
 having count(*)>1
+
+11) Completed Shipments
+
+select shipment_id,
+ship_date, c.customer_id	,
+IF(ship_date BETWEEN membership_start_date AND membership_end_date, 'Y','N') as is_member,
+quantity from shipments s join customers c
+on s.customer_id = c.customer_id
