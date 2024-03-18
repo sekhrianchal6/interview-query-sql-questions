@@ -171,3 +171,18 @@ LEFT JOIN
     previous_anlyst_cte ON user_experiences.user_id = previous_anlyst_cte.user_id;
 
 
+=======================================OR================================================================================================================================================================
+
+with cte as (
+    select user_id,
+    position_name,
+    lag(position_name) over(partition by user_id) as prev_role
+    from user_experiences 
+),
+new as (select * from cte
+where position_name = 'Data Scientist'
+and prev_role = 'Data Analyst')
+
+select (count(distinct new.user_id)/ count(distinct user_experiences.user_id)) as percentage
+from user_experiences  left join new
+on user_experiences.user_id = new.user_id;
