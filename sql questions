@@ -145,3 +145,29 @@ with cte as(  SELECT u.id, COUNT(n.notification) as total_pushes
  SELECT total_pushes, COUNT(total_pushes) as frequency
     FROM cte
     group by 1
+
+13) User Experience Percentage
+
+WITH previous_cte AS (
+    SELECT 
+        user_id,
+        position_name,
+        LAG(position_name) OVER (PARTITION BY user_id) AS previous_role 
+    FROM 
+        user_experiences
+),
+previous_anlyst_cte AS (
+    SELECT * 
+    FROM previous_cte 
+    WHERE position_name = 'Data Scientist' 
+    AND previous_role = 'Data Analyst'
+)
+
+SELECT 
+    COUNT(DISTINCT previous_anlyst_cte.user_id) / COUNT(DISTINCT user_experiences.user_id) AS percentage
+FROM 
+    user_experiences 
+LEFT JOIN 
+    previous_anlyst_cte ON user_experiences.user_id = previous_anlyst_cte.user_id;
+
+
