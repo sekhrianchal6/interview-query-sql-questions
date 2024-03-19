@@ -186,3 +186,13 @@ and prev_role = 'Data Analyst')
 select (count(distinct new.user_id)/ count(distinct user_experiences.user_id)) as percentage
 from user_experiences  left join new
 on user_experiences.user_id = new.user_id;
+
+14) Search Ratings
+
+SELECT query,round(avg((1/position) * rating),2) as avg_rating
+FROM search_results
+group by 1
+
+15) Random Weighted Driver
+
+
