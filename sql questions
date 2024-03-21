@@ -194,5 +194,14 @@ FROM search_results
 group by 1
 
 15) Random Weighted Driver
+16) Employee Salaries (ETL Error)
 
+select e.first_name,e.last_name,e.salary
+from employees e inner join (
+select first_name,last_name, max(id) as c_id
+from employees
+group by first_name,last_name
+)
+as m 
+on e.id = m.c_id; 
 
