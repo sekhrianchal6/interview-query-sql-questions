@@ -205,3 +205,19 @@ group by first_name,last_name
 as m 
 on e.id = m.c_id; 
 
+17) Categorize Sales
+
+select region,
+sum(sale_amount) as total_sales	,
+sum(case 
+when month(sale_date)=07 
+then sale_amount else 0 end) as promotional_sales,
+sum(case 
+when (sale_amount>=2000 or region = 'East') and  month(sale_date)!=07
+then sale_amount else 0 end) as premium_sales,
+sum(case 
+when sale_amount<2000 and region != 'East' and month(sale_date)!=07
+then sale_amount else 0 end) as standard_sales
+from sales
+GROUP BY region;
+
