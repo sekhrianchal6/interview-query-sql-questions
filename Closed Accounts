@@ -1,0 +1,12 @@
+https://www.interviewquery.com/questions/closed-accounts
+
+
+with cte as (
+select distinct account_id  
+from account_status 
+where status='open' and date='2019-12-31')
+select 
+round(count(distinct b.account_id)/count(distinct a.account_id),2) as percentage_closed 
+from cte a left join account_status b
+on a.account_id=b.account_id
+and b.status='closed' and b.date='2020-01-01'
