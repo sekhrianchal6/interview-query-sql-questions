@@ -1,0 +1,8 @@
+https://www.interviewquery.com/questions/hr-salary-reporting
+
+select job_title,
+sum(salary) as total_salaries,
+sum(overtime_hours*overtime_rate) as total_overtime_payments,
+SUM(salary) + SUM(overtime_hours * overtime_rate) as total_compensation
+from employees
+group by 1
