@@ -1,0 +1,15 @@
+https://www.interviewquery.com/questions/lowest-paid
+
+select
+count(ep.project_id) as completed_projects, ep.employee_id , 
+e.salary 
+from employees e 
+join  employee_projects ep 
+on e.id = ep.employee_id 
+join projects p 
+on ep.project_id = p.id
+where p.end_date is not NULL
+group by 2
+having completed_projects > 1
+order by 3
+limit 3
