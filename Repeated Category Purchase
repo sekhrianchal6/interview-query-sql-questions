@@ -1,0 +1,13 @@
+https://www.interviewquery.com/questions/purchased-product
+
+
+with cte as(
+    select *,
+row_number() over(partition by product_category order by id asc ) as rnk 
+from purchases
+)
+
+select product_name	,
+case when rnk=1 then 0 else 1 end as category_previously_purchased
+from cte
+order by id 
