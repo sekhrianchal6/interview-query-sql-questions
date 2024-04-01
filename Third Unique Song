@@ -1,0 +1,12 @@
+https://www.interviewquery.com/questions/third-unique-song
+
+with cte as 
+(select user_id, song_name, date_played,
+RANK() over (partition by user_id order by date_played) as rnk
+from song_plays
+group by user_id, song_name)
+
+select users.name as name, cte.date_played, cte.song_name
+from cte right join users
+on cte.user_id = users.id
+and cte.rnk = 3
