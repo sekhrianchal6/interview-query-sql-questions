@@ -1,0 +1,9 @@
+https://www.interviewquery.com/questions/monthly-product-sales
+
+select date(month) as month ,
+max(case when product_id=1 then amount_sold end ) as '1',
+max(case when product_id=2 then amount_sold end ) as '2',
+max(case when product_id=3 then amount_sold end ) as '3',
+max(case when product_id=4 then amount_sold end ) as '4'
+from monthly_sales
+group by month 
