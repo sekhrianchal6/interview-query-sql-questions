@@ -1,0 +1,12 @@
+https://www.interviewquery.com/questions/employees-before-managers
+
+with cte as (
+    select concat(e.first_name , " " , e.last_name) as employee_name ,
+    e.join_date AS emp_date,
+    e.manager_id,
+    m.join_date AS man_date  
+from employees e join managers m 
+on e.manager_id = m.id)
+
+select employee_name from cte 
+where emp_date < man_date
