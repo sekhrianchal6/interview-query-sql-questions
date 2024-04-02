@@ -1,0 +1,9 @@
+https://www.interviewquery.com/questions/employee-project-budgets
+
+select p.budget/count(DISTINCT ep.employee_id) as budget_per_employee,
+p.title 
+from projects p join employee_projects ep 
+on p.id = ep.project_id
+group by p.title
+order by budget_per_employee desc
+limit 5
