@@ -1,0 +1,13 @@
+https://www.interviewquery.com/questions/average-commute-time
+
+
+SELECT commuter_id,
+floor(avg(timestampdiff(minute,start_dt,end_dt))) as avg_commuter_time,
+(select round(avg(timestampdiff(minute,start_dt,end_dt)),0) 
+from rides where city="NY") as avg_time
+
+FROM rides
+where city = 'NY'
+group by commuter_id;
+
+
