@@ -1,0 +1,14 @@
+https://www.interviewquery.com/questions/feed-impression
+
+with cte as (
+select user_id,
+max(case when action_type='View' and datediff(action_date,created_at)<=7 then 1 else 0 end) as viewed,
+max(case when action_type='Engagement' then 1 else 0 end) as engagement
+from event_log e
+inner join pins p
+on e.pin_id=p.pin_id
+group by 1)
+
+select 
+count(distinct case when viewed=1 and engagement=1 then user_id end)*1.0/count(distinct user_id) as percent_of_users
+from cte
