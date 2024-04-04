@@ -1,0 +1,11 @@
+https://www.interviewquery.com/questions/page-recommendations
+
+SELECT p.page_id as page,
+p.postal_code,
+(count(case when u.postal_code = p.postal_code then r.user_id else null end) / count(r.user_id)) as percentage
+FROM page_sponsorships p  join recommendations r 
+on p.page_id = r.page_id
+
+join users u
+on u.id = r.user_id 
+group by 1,2
