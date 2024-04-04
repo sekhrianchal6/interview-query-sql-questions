@@ -1,0 +1,9 @@
+https://www.interviewquery.com/questions/free-seats
+
+select f.id as flight_id,
+(p.number_of_seats - count(fp.seat_id)) as free_seats
+from  flights f join planes p 
+ON p.id = f.plane_id
+JOIN flight_purchases fp
+ON fp.flight_id = f.id
+GROUP BY 1
