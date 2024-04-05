@@ -1,0 +1,9 @@
+https://www.interviewquery.com/questions/cumulative-sales-by-product
+
+SELECT s1.product_id,
+s1.date,
+sum(s2.price) as cumulative_sum
+FROM sales s1 join sales s2 
+on s1.product_id = s2.product_id AND s1.date >= s2.date
+group by 1,2
+order by 1,2
