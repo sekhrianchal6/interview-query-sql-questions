@@ -1,0 +1,15 @@
+https://www.interviewquery.com/questions/post-success
+
+with cte as (
+    SELECT date(created_at) as dt,
+    sum(case when action = "post_enter" then 1 else 0 end) as post_enter,
+    SUM(case when action = 'post_submit' then 1 else 0 end) as post_submit,
+    SUM(case when action = 'post_cancel' then 1 else 0 end) as post_cancel
+    from events
+    where  month(created_At) = 01 and year(created_At) = 2020
+    group by 1
+)
+
+
+select dt, ROUND(post_submit*1.0/post_enter,1) post_success_rate  from cte;
+
