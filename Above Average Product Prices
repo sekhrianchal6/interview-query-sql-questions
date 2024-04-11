@@ -1,0 +1,17 @@
+https://www.interviewquery.com/questions/above-average-product-prices
+
+WITH cte as ( 
+select 
+    product_id, 
+    price as product_price, 
+    round(avg(price*quantity) over(),1) as avg_price
+    from products p 
+    join transactions t 
+        on p.id = t.product_id         
+) 
+Select 
+    avg_price, 
+    product_id, 
+    product_price 
+    From cte      
+    Where product_price > avg_price 
