@@ -1,0 +1,32 @@
+https://www.interviewquery.com/questions/size-of-joins
+
+with top_ads as(
+    select id from ads
+    order by id asc
+    limit 3
+)
+
+select 'inner_join' as join_type,
+count(*) as number_of_rows 
+from ads a join top_ads b 
+on a.id = b.id
+
+union all
+
+select 'left_join' as join_type,
+count(*) as number_of_rows 
+from ads a left join top_ads b 
+on a.id = b.id
+
+union all
+
+select 'right_join' as join_type,
+count(*) as number_of_rows 
+from ads a right join top_ads b 
+on a.id = b.id
+
+union all
+
+select 'cross_join' as join_type,
+count(*) as number_of_rows 
+from ads a cross join top_ads b;
