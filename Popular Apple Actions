@@ -1,0 +1,11 @@
+https://www.interviewquery.com/questions/popular-apple-actions
+
+select action,
+dense_rank() over(order by count(user_id) desc) as ranks
+from events
+where month(created_at) = 11
+and year(created_at) = 2020
+and platform in ('iPhone','iPad')
+group by action
+order by ranks asc
+limit 5
