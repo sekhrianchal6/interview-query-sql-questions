@@ -1,0 +1,16 @@
+https://www.interviewquery.com/questions/median-household-income
+
+with cte as (
+    select * ,
+    row_number() over(partition by city order by household_income) as r,
+    count(city) over(partition by city) as cnt
+    from survey_responses
+)
+
+
+SELECT city	,
+avg(household_income) as median_income
+FROM cte
+where r between cnt/2 and (cnt/2)+1
+group by 1
+
