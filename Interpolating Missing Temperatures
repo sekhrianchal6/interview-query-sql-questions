@@ -1,0 +1,10 @@
+https://www.interviewquery.com/questions/interpolating-missing-temperatures
+
+WITH cte AS (
+    SELECT date, city, temperature, 
+    LEAD(temperature) OVER(PARTITION BY city order by date) as next,
+    LAG(temperature) OVER(PARTITION BY city order by date) as prev
+    FROM temperature_data)
+
+select date, city, CASE WHEN temperature is NULL THEN (next+prev)/2 ELSE temperature END AS temperature 
+FROM cte
