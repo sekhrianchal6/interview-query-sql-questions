@@ -1,0 +1,32 @@
+https://www.interviewquery.com/questions/branch-sales-pivot
+
+with sales_2021 as (
+    select 
+        branch_id,
+        sum(total_sales) as sales_2021 
+    from sales_2021 
+    group by branch_id
+),
+sales_2022 as (
+    select 
+        branch_id,
+        sum(total_sales) as sales_2022
+    from sales_2022
+    group by branch_id
+),
+all_branches as (
+    select 
+        branch_id
+    from sales_2021
+    union 
+    select 
+        branch_id
+    from sales_2022
+)
+select 
+    b.branch_id,
+    ifnull(sales_2021,0) as total_sales_2021,
+    ifnull(sales_2022,0) as total_sales_2022
+from all_branches b 
+left join sales_2021 s1 on b.branch_id = s1.branch_id
+left join sales_2022 s2 on b.branch_id = s2.branch_id;
