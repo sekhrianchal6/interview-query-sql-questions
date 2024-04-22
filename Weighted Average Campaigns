@@ -1,0 +1,11 @@
+https://www.interviewquery.com/questions/weighted-average-campaigns
+
+with cte as(
+    select *, (num_opens/num_users) as opened,
+    (num_clicks/num_users) as clicked
+     from email_campaigns
+)
+
+SELECT campaign_name,
+round((0.3 * opened + 0.7 * clicked),2) as weighted_avg
+FROM cte
