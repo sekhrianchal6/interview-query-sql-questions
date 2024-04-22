@@ -1,0 +1,13 @@
+https://www.interviewquery.com/questions/weighted-average-with-missing-dates
+
+with cte as (
+    select a1.date,
+        round((3*a1.new_users + 2*coalesce(a2.new_users,0) + 1*coalesce(a3.new_users,0))/6,2) weighted_average,
+        rank() over (order by a1.date) as rnk 
+    from acquisitions a1 
+    left join acquisitions a2 
+    on a1.date = a2.date + 1 
+    left join acquisitions a3 
+    on a1.date = a3.date + 2)
+select date, weighted_average from cte
+where rnk > 2;
