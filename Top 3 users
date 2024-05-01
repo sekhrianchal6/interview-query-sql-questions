@@ -1,0 +1,14 @@
+# https://www.interviewquery.com/questions/top-3-users
+
+with cte as (
+    select *, rank() over (partition by date order by downloads desc ) as daily_rank 
+    from download_facts 
+    order by date,daily_rank)
+
+select daily_rank, 
+user_id,
+date,
+downloads
+from cte
+where daily_rank <=3
+order by date, daily_rank
