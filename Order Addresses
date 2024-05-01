@@ -1,0 +1,10 @@
+# https://www.interviewquery.com/questions/order-addresses
+
+SELECT
+round(
+    sum(case 
+    when t.shipping_address = u.address 
+    then 1 end)/ count(t.id)
+    ,2) as home_address_percent
+FROM transactions t join users u 
+on t.user_id = u.id 
